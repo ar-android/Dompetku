@@ -3,15 +3,18 @@ package com.ahmadrosid.dompetku.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmadrosid.dompetku.DetailTransactionActivity;
+import com.ahmadrosid.dompetku.NewTransaction;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Ballance;
 import com.ahmadrosid.dompetku.data.Transactions;
@@ -57,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
+        LinearLayout bottomSheetViewgroup = (LinearLayout) findViewById(R.id.bottom_sheet);
+
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        NewTransaction modalBottomSheet = new NewTransaction();
+        modalBottomSheet.show(getSupportFragmentManager(), "bottom sheet");
     }
 
     @Override

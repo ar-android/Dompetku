@@ -18,6 +18,7 @@ import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.list.AdapterTransactionList;
 import com.ahmadrosid.dompetku.list.TransactionItemHolder;
+import com.ahmadrosid.dompetku.transaction.NewTransaction;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
+import com.ahmadrosid.dompetku.main.MainContract;
 
 import java.util.List;
 
@@ -18,23 +19,24 @@ import java.util.List;
  * @Github https://github.com/ar-android
  * @Web http://ahmadrosid.com
  */
-public abstract class AdapterTransactionList extends RecyclerView.Adapter<TransactionItemHolder>{
+public class AdapterTransactionList extends RecyclerView.Adapter<TransactionItemHolder>{
     private List<Transactions> data;
+    private MainContract.ListViewListener listViewListener;
 
-    public AdapterTransactionList(List<Transactions> data) {
+    public AdapterTransactionList(List<Transactions> data, MainContract.ListViewListener listener) {
         this.data = data;
+        listViewListener = listener;
     }
 
     @Override public TransactionItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_wallet_list, parent, false);
-        return new TransactionItemHolder(view);
+        return new TransactionItemHolder(view, listViewListener);
     }
 
     @Override public void onBindViewHolder(TransactionItemHolder holder, int position) {
-        bindHolder(holder, data.get(position));
+//        bindHolder(holder, data.get(position));
+        holder.bind(data.get(position));
     }
-
-    protected abstract void bindHolder(TransactionItemHolder holder, Transactions model);
 
     @Override public int getItemCount() {
         return data.size();

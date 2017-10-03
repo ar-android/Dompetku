@@ -91,19 +91,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showListTransaksi(List<Transactions> transactionses) {
-        AdapterTransactionList adapter = new AdapterTransactionList(transactionses) {
-            @Override protected void bindHolder(TransactionItemHolder holder, final Transactions model) {
-                holder.bind(model);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View view) {
-                        startActivity(new
-                                Intent(MainActivity.this, DetailTransactionActivity.class)
-                                .putExtra("id", model.getId()));
-                        finish();
-                    }
-                });
+        AdapterTransactionList adapter = new AdapterTransactionList(transactionses, new MainContract.ListViewListener() {
+            @Override
+            public void onClickListener(Transactions transactions) {
+                DetailTransactionActivity.start(MainActivity.this, transactions);
             }
-        };
+
+            @Override
+            public void onLongClickListener(Transactions transactions) {
+
+            }
+        });
 
         listWallet.setLayoutManager(new LinearLayoutManager(this));
         listWallet.setAdapter(adapter);

@@ -1,5 +1,6 @@
 package com.ahmadrosid.dompetku.detail;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,11 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     private TextView time;
     long id;
 
+    public static void start(Context context, Transactions transaction) {
+        Intent starter = new Intent(context, DetailTransactionActivity.class);
+        starter.putExtra("Transaction", transaction);
+        context.startActivity(starter);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +53,10 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
         type = (TextView) findViewById(R.id.type);
         time = (TextView) findViewById(R.id.time);
 
-        loadData();
+        Transactions transactions = (Transactions) getIntent().getExtras().getSerializable("Transaction");
+
+//        loadData();
+        setupData(transactions);
     }
 
     @Override protected void onResume() {

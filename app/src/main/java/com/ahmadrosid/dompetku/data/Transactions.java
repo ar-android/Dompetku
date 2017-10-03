@@ -1,5 +1,7 @@
 package com.ahmadrosid.dompetku.data;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 
 /**
@@ -10,7 +12,7 @@ import io.realm.RealmObject;
  * @Github https://github.com/ar-android
  * @Web http://ahmadrosid.com
  */
-public class Transactions extends RealmObject{
+public class Transactions extends RealmObject implements Serializable {
 
     private long id;
     private String title;

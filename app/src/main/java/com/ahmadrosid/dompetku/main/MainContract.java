@@ -24,4 +24,8 @@ public interface MainContract {
         void updateTransaksi(Transactions transactions);
     }
 
+    interface ListViewListener {
+        void onClickListener(Transactions transactions);
+        void onLongClickListener(Transactions transactions);
+    }
 }

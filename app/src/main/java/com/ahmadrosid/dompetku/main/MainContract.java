@@ -12,7 +12,7 @@ import java.util.List;
 public interface MainContract {
 
     interface View {
-        void showBalance(Ballance ballance);
+        void showBalance(int ballance);
         void showError(String message);
         void showListTransaksi(List<Transactions> transactionses);
     }

@@ -41,11 +41,18 @@ public class MainPresenter implements MainContract.Presenter {
                 List<Transactions> data = realm.where(Transactions.class).findAll();
                 view.showListTransaksi(data);
 
-                long b = realm.where(Ballance.class).count();
-                if (b > 0){
-                    Ballance ballance = realm.where(Ballance.class).findFirst();
-                    view.showBalance(ballance);
+                int ballance = 0;
+
+                for (Transactions transaction : data) {
+                    if (transaction.getTransaction_type() == 1) {
+                        ballance -= transaction.getAmount();
+                    } else {
+                        ballance += transaction.getAmount();
+                    }
                 }
+
+                view.showBalance(ballance);
+
             }
         });
     }

@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showBalance(Ballance ballance) {
-        ballanceTextView.setText(CurrencyHelper.format(ballance.getAmount()));
+    public void showBalance(int ballance) {
+        ballanceTextView.setText(CurrencyHelper.format(ballance));
     }
 
     @Override

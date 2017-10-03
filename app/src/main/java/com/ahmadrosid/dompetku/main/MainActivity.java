@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmadrosid.dompetku.DetailTransactionActivity;
+import com.ahmadrosid.dompetku.StateBottomeSet;
 import com.ahmadrosid.dompetku.transaction.NewTransaction;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Ballance;
@@ -21,6 +22,7 @@ import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.list.AdapterTransactionList;
 import com.ahmadrosid.dompetku.list.TransactionItemHolder;
+import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ import butterknife.OnClick;
  * Created by staf on 03-Oct-17.
  */
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends AppCompatActivity implements MainContract.View, StateBottomeSet {
 
     @BindView(R.id.ballance)
     TextView ballanceTextView;
@@ -64,7 +66,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        NewTransaction modalBottomSheet = new NewTransaction();
+        NewTransaction modalBottomSheet = new NewTransaction(new TransactionContract.AddTransactionListener() {
+            @Override
+            public void success(Transactions transactions) {
+                presenter.addTransaksi(transactions);
+            }
+
+            @Override
+            public void failed(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
         modalBottomSheet.show(getSupportFragmentManager(), "bottom sheet");
     }
 
@@ -97,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         listWallet.setLayoutManager(new LinearLayoutManager(this));
         listWallet.setAdapter(adapter);
         listWallet.setHasFixedSize(true);
+    }
+
+    @Override
+    public void onDismiss() {
+
     }
 
 }

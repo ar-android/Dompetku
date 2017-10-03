@@ -33,7 +33,11 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
     private Spinner transaction;
     private int type = 0;
 
-    private Realm realm;
+    private TransactionContract.AddTransactionListener addTransactionListener;
+
+    public NewTransaction(TransactionContract.AddTransactionListener listener) {
+        addTransactionListener = listener;
+    }
 
     @Nullable
     @Override
@@ -74,19 +78,18 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
         if (validate()) {
             type = transaction.getSelectedItemPosition();
 
-            realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            Transactions data = realm.createObject(Transactions.class);
+            Transactions data = new Transactions();
             data.setTitle(item_name.getText().toString());
             data.setAmount(Integer.parseInt(item_amount.getText().toString()));
             data.setDate(System.currentTimeMillis());
             data.setTransaction_type(type);
-            realm.copyFromRealm(data);
-            realm.commitTransaction();
-            realm.close();
 
-            ((StateBottomeSet)getActivity()).onDismiss();
+            addTransactionListener.success(data);
+
+            ((StateBottomeSet) getActivity()).onDismiss();
             dismiss();
+        } else {
+            addTransactionListener.failed("Fill Title and Amount.");
         }
     }
 

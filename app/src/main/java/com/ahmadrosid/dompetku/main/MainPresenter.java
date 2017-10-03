@@ -52,7 +52,12 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void addTransaksi(Transactions transactions) {
+        realm.beginTransaction();
 
+        realm.copyToRealm(transactions);
+        realm.commitTransaction();
+
+        realm.close();
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.ahmadrosid.dompetku.data.Transactions;
+import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 
 import io.realm.Realm;
 

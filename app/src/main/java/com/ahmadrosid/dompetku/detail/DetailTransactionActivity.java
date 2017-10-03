@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku;
+package com.ahmadrosid.dompetku.detail;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ahmadrosid.dompetku.EditTransactionActivity;
+import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.main.MainActivity;

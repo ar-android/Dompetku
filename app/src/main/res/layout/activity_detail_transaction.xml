@@ -5,7 +5,7 @@
     android:id="@+id/activity_detail_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ahmadrosid.dompetku.DetailTransactionActivity">
+    tools:context="com.ahmadrosid.dompetku.detail.DetailTransactionActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -52,10 +52,12 @@ public class TransactionItemHolder extends RecyclerView.ViewHolder{
         if (model.getTransaction_type() == 0){
             icon.setImageResource(R.drawable.wallet_in);
             type.setText("Pemasukan");
+            type.setBackgroundResource(R.color.colorPrimary);
             amount.setText("+ " + data_amount);
         }else{
             icon.setImageResource(R.drawable.wallet_out);
             type.setText("Pengeluaran");
+            type.setBackgroundResource(R.color.colorAccent);
             amount.setText("- " + data_amount);
         }
     }

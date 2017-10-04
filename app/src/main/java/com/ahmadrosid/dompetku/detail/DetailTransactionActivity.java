@@ -47,6 +47,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     private Calendar calendar = Calendar.getInstance();
 
     long id;
+    private Transaction transaction;
 
     public static void start(Context context, Transaction transaction) {
         Intent starter = new Intent(context, DetailTransactionActivity.class);
@@ -75,7 +76,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     }
 
     private void loadData() {
-        Transaction transaction = (Transaction) getIntent().getExtras().getSerializable("Transaction");
+        transaction = (Transaction) getIntent().getExtras().getSerializable("Transaction");
 
         setupData(transaction);
     }
@@ -121,9 +122,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_edit:
-                startActivity(new
-                        Intent(DetailTransactionActivity.this, EditTransactionActivity.class)
-                        .putExtra("id", id));
+                EditTransactionActivity.start(this, transaction);
                 finish();
                 break;
             case R.id.btn_delete:

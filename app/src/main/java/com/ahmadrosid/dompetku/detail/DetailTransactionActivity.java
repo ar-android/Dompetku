@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ahmadrosid.dompetku.EditTransactionActivity;
@@ -20,46 +21,53 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.Realm;
 
 public class DetailTransactionActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @BindView(R.id.ballance)
+    TextView ballance;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.amount)
+    TextView amount;
+    @BindView(R.id.time)
+    TextView time;
+    @BindView(R.id.type)
+    TextView type;
+    @BindView(R.id.btn_edit)
+    Button btnEdit;
+    @BindView(R.id.btn_delete)
+    Button btnDelete;
+
     private Calendar calendar = Calendar.getInstance();
 
-    private TextView ballance;
-    private TextView title;
-    private TextView amount;
-    private TextView type;
-    private TextView time;
     long id;
 
-    public static void start(Context context, Transactions transaction) {
+    public static void start(Context context, long transaction) {
         Intent starter = new Intent(context, DetailTransactionActivity.class);
         starter.putExtra("Transaction", transaction);
         context.startActivity(starter);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
+        ButterKnife.bind(this);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        ballance = (TextView) findViewById(R.id.ballance);
-        title = (TextView) findViewById(R.id.title);
-        amount = (TextView) findViewById(R.id.amount);
-        type = (TextView) findViewById(R.id.type);
-        time = (TextView) findViewById(R.id.time);
-
-        Transactions transactions = (Transactions) getIntent().getExtras().getSerializable("Transaction");
-
-//        loadData();
-        setupData(transactions);
+        loadData();
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         if (id > 0)
             loadData();
@@ -67,11 +75,10 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
 
     private void loadData() {
         Realm realm = Realm.getDefaultInstance();
-        id = getIntent().getLongExtra("id", 0);
+        id = getIntent().getExtras().getLong("Transaction");
 
         realm.beginTransaction();
-        Transactions data = realm.where(Transactions.class)
-                .equalTo("id", id).findFirst();
+        Transactions data = realm.where(Transactions.class).equalTo("id", id).findFirst();
         setupData(data);
         realm.commitTransaction();
         realm.close();
@@ -103,17 +110,19 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
         return new SimpleDateFormat(sdfPattern).format(calendar.getTime());
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 startActivity(new
-                        Intent(DetailTransactionActivity.this, MainActivity.class) );
+                        Intent(DetailTransactionActivity.this, MainActivity.class));
                 finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onClick(View view) {
+    @OnClick({R.id.btn_edit, R.id.btn_delete})
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_edit:
                 startActivity(new
@@ -132,7 +141,8 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
                 .setTitle("Message")
                 .setMessage("Are you sure to delete?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         Realm realm = Realm.getDefaultInstance();
                         realm.beginTransaction();
                         Transactions data = realm.where(Transactions.class)
@@ -145,10 +155,12 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 })
                 .show();
     }
+
 }

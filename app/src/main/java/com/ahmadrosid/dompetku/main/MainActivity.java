@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         AdapterTransactionList adapter = new AdapterTransactionList(transactionses, new MainContract.ListViewListener() {
             @Override
             public void onClickListener(Transactions transactions) {
-                DetailTransactionActivity.start(MainActivity.this, transactions);
+                DetailTransactionActivity.start(MainActivity.this, transactions.getId());
             }
 
             @Override

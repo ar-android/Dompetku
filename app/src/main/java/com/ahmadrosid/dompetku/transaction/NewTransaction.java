@@ -13,7 +13,6 @@ import android.widget.ImageView;
 
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.StateBottomeSet;
-import com.ahmadrosid.dompetku.data.Transactions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

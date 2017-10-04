@@ -1,6 +1,5 @@
 package com.ahmadrosid.dompetku.models;
 
-import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 
 import java.util.List;

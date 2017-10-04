@@ -1,18 +1,11 @@
 package com.ahmadrosid.dompetku.main;
 
-import android.widget.TextView;
-
 import com.ahmadrosid.dompetku.DompetkuApp;
-import com.ahmadrosid.dompetku.R;
-import com.ahmadrosid.dompetku.data.Ballance;
 import com.ahmadrosid.dompetku.data.Transactions;
-import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.models.TransactionListener;
 import com.ahmadrosid.dompetku.models.TransactionRepository;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;

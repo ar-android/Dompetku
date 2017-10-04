@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku;
+package com.ahmadrosid.dompetku.transaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 

@@ -1,7 +1,6 @@
 package com.ahmadrosid.dompetku.main;
 
 import com.ahmadrosid.dompetku.DompetkuApp;
-import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.models.TransactionListener;
 import com.ahmadrosid.dompetku.models.TransactionRepository;
@@ -10,8 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-
 /**
  * Created by staf on 03-Oct-17.
  */
@@ -19,9 +16,6 @@ import io.realm.Realm;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view;
-
-    @Inject
-    Realm realm;
 
     @Inject
     TransactionRepository transactionRepository;
@@ -54,12 +48,12 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void deleteTransaksi(Transactions transactions) {
+    public void deleteTransaksi(Transaction transactions) {
 
     }
 
     @Override
-    public void updateTransaksi(Transactions transactions) {
+    public void updateTransaksi(Transaction transactions) {
 
     }
 }

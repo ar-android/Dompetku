@@ -12,12 +12,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmadrosid.dompetku.transaction.EditTransactionActivity;
 import com.ahmadrosid.dompetku.R;
-import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.main.MainActivity;
 import com.ahmadrosid.dompetku.models.Transaction;
+import com.ahmadrosid.dompetku.transaction.EditTransactionActivity;
 import com.ahmadrosid.dompetku.transaction.TransactionContract;
 import com.ahmadrosid.dompetku.transaction.TransactionPresenter;
 
@@ -28,7 +27,6 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
 public class DetailTransactionActivity extends AppCompatActivity implements View.OnClickListener, TransactionContract.EditView {
 
@@ -111,23 +109,12 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.beginTransaction();
-                        Transactions data = realm.where(Transactions.class)
-                                .equalTo("id", id).findFirst();
-                        data.deleteFromRealm();
-                        realm.commitTransaction();
-                        realm.close();
+                        presenter.deleteTransaction(id);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
+                .setNegativeButton("Cancel", null)
                 .show();
     }
 

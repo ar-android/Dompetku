@@ -1,6 +1,5 @@
 package com.ahmadrosid.dompetku.main;
 
-import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.models.Transaction;
 
 import java.util.List;
@@ -20,8 +19,8 @@ public interface MainContract {
     interface Presenter {
         void loadData();
         void addTransaksi(String title, int amount, Transaction.TransactionType type);
-        void deleteTransaksi(Transactions transactions);
-        void updateTransaksi(Transactions transactions);
+        void deleteTransaksi(Transaction transactions);
+        void updateTransaksi(Transaction transactions);
     }
 
     interface ListViewListener {

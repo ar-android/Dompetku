@@ -31,6 +31,17 @@ public class MainPresenter implements MainContract.Presenter {
         List<Transaction> data = transactionRepository.getTransaksiList();
 
         view.showListTransaksi(data);
+
+        int ballance = 0;
+        for (Transaction transaction : data) {
+            if (transaction.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
+                ballance += transaction.amount;
+            } else {
+                ballance -= transaction.amount;
+            }
+        }
+
+        view.showBalance(ballance);
     }
 
     @Override

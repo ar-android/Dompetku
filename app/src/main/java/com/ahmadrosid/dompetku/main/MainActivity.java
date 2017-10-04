@@ -7,6 +7,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,10 +34,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @BindView(R.id.ballance)
     TextView ballanceTextView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     @BindView(R.id.list_wallet)
     ListView listWallet;
+    @BindView(R.id.fab_pemasukan)
+    FloatingActionButton fabPemasukan;
+    @BindView(R.id.fab_pengeluaran)
+    FloatingActionButton fabPengeluaran;
 
     private MainContract.Presenter presenter;
 
@@ -53,27 +56,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onResume() {
         super.onResume();
         presenter.loadData();
-    }
-
-    @OnClick(R.id.fab)
-    public void onViewClicked() {
-        LinearLayout bottomSheetViewgroup = (LinearLayout) findViewById(R.id.bottom_sheet);
-
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        NewTransaction modalBottomSheet = new NewTransaction(this, new MainContract.PopUpListener() {
-
-            @Override
-            public void success() {
-                presenter.loadData();
-            }
-
-            @Override
-            public void failed(String message) {
-                showError(message);
-            }
-        });
-        modalBottomSheet.show();
     }
 
     @Override
@@ -96,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
             @Override
             public void onLongClickListener(final Transaction transactions) {
-                CharSequence[] menuItems = new CharSequence[] {"Detail", "Edit", "Delete"};
+                CharSequence[] menuItems = new CharSequence[]{"Detail", "Edit", "Delete"};
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
@@ -105,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
-                            case 0 :
+                            case 0:
                                 DetailTransactionActivity.start(MainActivity.this, transactions.getId());
                                 break;
-                            case 1 :
+                            case 1:
                                 EditTransactionActivity.start(MainActivity.this, transactions.getId());
                                 break;
-                            case 2 :
+                            case 2:
                                 delete(transactions);
                                 break;
                         }
@@ -139,4 +121,35 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 .show();
     }
 
+    @OnClick({R.id.fab_pemasukan, R.id.fab_pengeluaran})
+    public void onViewClicked(View view) {
+        MainContract.PopUpListener popUpListener = new MainContract.PopUpListener() {
+
+            @Override
+            public void success() {
+                presenter.loadData();
+            }
+
+            @Override
+            public void failed(String message) {
+                showError(message);
+            }
+        };
+
+        Transaction.TransactionType type;
+
+        switch (view.getId()) {
+            default:
+            case R.id.fab_pemasukan:
+                type = Transaction.TransactionType.PEMASUKAN;
+                break;
+            case R.id.fab_pengeluaran:
+                type = Transaction.TransactionType.PENGELUARAN;
+                break;
+        }
+
+        NewTransaction modalBottomSheet = new NewTransaction(this, type, popUpListener);
+        modalBottomSheet.show();
+
+    }
 }

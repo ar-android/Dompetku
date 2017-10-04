@@ -2,16 +2,14 @@ package com.ahmadrosid.dompetku.transaction;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatSpinner;
-import android.view.LayoutInflater;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.main.MainContract;
@@ -41,18 +39,22 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
     AppCompatEditText itemName;
     @BindView(R.id.item_amount)
     AppCompatEditText itemAmount;
-    @BindView(R.id.transaction)
-    AppCompatSpinner transaction;
-    private int type = 0;
+    @BindView(R.id.title)
+    AppCompatTextView title;
+    @BindView(R.id.title_bar)
+    RelativeLayout titleBar;
+
+    private Transaction.TransactionType type;
 
     private MainContract.PopUpListener popUpListener;
 
     private TransactionContract.Presenter presenter;
 
-    public NewTransaction(Context context, MainContract.PopUpListener listener) {
+    public NewTransaction(Context context, Transaction.TransactionType type, MainContract.PopUpListener listener) {
         super(context);
         popUpListener = listener;
         presenter = new TransactionPresenter(this);
+        this.type = type;
     }
 
     @Override
@@ -62,13 +64,13 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         setContentView(R.layout.new_transaction_bottomset);
         ButterKnife.bind(this);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getContext(),
-                R.array.transaction_type,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        transaction.setAdapter(adapter);
+        title.setText(type.name());
+
+        if (type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
+            titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+        } else {
+            titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+        }
     }
 
     @OnClick({R.id.img_close, R.id.img_done})
@@ -89,21 +91,21 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         } else if (itemAmount.getText().toString().isEmpty()) {
             popUpListener.failed("Please input amount.");
         } else {
-            type = transaction.getSelectedItemPosition();
-
-            Transaction.TransactionType transactionType;
-
-            if (type == 0) {
-                transactionType = Transaction.TransactionType.PEMASUKAN;
-            } else {
-                transactionType = Transaction.TransactionType.PENGELUARAN;
-            }
-
-            presenter.createTransaction(
-                    itemName.getText().toString(),
-                    Integer.parseInt(itemAmount.getText().toString()),
-                    transactionType
-            );
+//            type = transaction.getSelectedItemPosition();
+//
+//            Transaction.TransactionType transactionType;
+//
+//            if (type == 0) {
+//                transactionType = Transaction.TransactionType.PEMASUKAN;
+//            } else {
+//                transactionType = Transaction.TransactionType.PENGELUARAN;
+//            }
+//
+//            presenter.createTransaction(
+//                    itemName.getText().toString(),
+//                    Integer.parseInt(itemAmount.getText().toString()),
+//                    transactionType
+//            );
 
         }
     }

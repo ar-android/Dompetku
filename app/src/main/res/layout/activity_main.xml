@@ -11,13 +11,34 @@
     <include layout="@layout/content_main"/>
 
     <!-- Bottom Sheet -->
-    <include layout="@layout/bottom_sheets_main" />
+    <include layout="@layout/bottom_sheets_main"
+        android:id="@+id/include" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_add" />
+        android:orientation="vertical"
+        android:layout_gravity="bottom|right|end">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_pemasukan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_add" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_pengeluaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/colorAccent"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add" />
+
+    </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -13,13 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmadrosid.dompetku.R;
-import com.ahmadrosid.dompetku.StateBottomeSet;
 import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.transaction.EditTransactionActivity;
 import com.ahmadrosid.dompetku.transaction.NewTransaction;
-import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ import butterknife.OnClick;
  * Created by staf on 03-Oct-17.
  */
 
-public class MainActivity extends AppCompatActivity implements MainContract.View, StateBottomeSet {
+public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     @BindView(R.id.ballance)
     TextView ballanceTextView;
@@ -125,11 +123,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         });
 
         listWallet.setAdapter(adapter);
-    }
-
-    @Override
-    public void onDismiss() {
-
     }
 
     private void delete(final Transaction transaction) {

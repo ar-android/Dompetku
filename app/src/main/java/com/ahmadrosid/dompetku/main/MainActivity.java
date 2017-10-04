@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        NewTransaction modalBottomSheet = new NewTransaction(new MainContract.PopUpListener() {
+        NewTransaction modalBottomSheet = new NewTransaction(this, new MainContract.PopUpListener() {
 
             @Override
             public void success() {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 showError(message);
             }
         });
-        modalBottomSheet.show(getSupportFragmentManager(), "bottom sheet");
+        modalBottomSheet.show();
     }
 
     @Override

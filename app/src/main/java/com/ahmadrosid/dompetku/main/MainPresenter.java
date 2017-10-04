@@ -4,6 +4,7 @@ import com.ahmadrosid.dompetku.DompetkuApp;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.models.TransactionListener;
 import com.ahmadrosid.dompetku.models.TransactionRepository;
+import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
 
@@ -34,7 +35,22 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void addTransaksi(String title, int amount, Transaction.TransactionType type) {
-        transactionRepository.addTransaksi(title, amount, type, new TransactionListener() {
+        transactionRepository.addTransaksi(title, amount, type, new TransactionContract.AddTransactionListener() {
+            @Override
+            public void success(Transaction transaction) {
+                loadData();
+            }
+
+            @Override
+            public void failed(String message) {
+                view.showError(message);
+            }
+        });
+    }
+
+    @Override
+    public void deleteTransaksi(Transaction transactions) {
+        transactionRepository.deleteTransaksi(transactions.getId(), new TransactionContract.DeleteTransactionListener() {
             @Override
             public void success() {
                 loadData();
@@ -48,12 +64,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void deleteTransaksi(Transaction transactions) {
-
-    }
-
-    @Override
     public void updateTransaksi(Transaction transactions) {
 
     }
+
 }

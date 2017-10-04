@@ -16,7 +16,6 @@ import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.transaction.NewTransaction;
-import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
 
@@ -60,20 +59,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        NewTransaction modalBottomSheet = new NewTransaction(new TransactionContract.AddTransactionListener() {
+        NewTransaction modalBottomSheet = new NewTransaction(new MainContract.PopUpListener() {
 
             @Override
-            public void success(String title, int amount, int type) {
-                if (type == 0) {
-                    presenter.addTransaksi(title, amount, Transaction.TransactionType.PEMASUKAN);
-                } else {
-                    presenter.addTransaksi(title, amount, Transaction.TransactionType.PENGELUARAN);
-                }
+            public void success() {
+                presenter.loadData();
             }
 
             @Override
             public void failed(String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                showError(message);
             }
         });
         modalBottomSheet.show(getSupportFragmentManager(), "bottom sheet");

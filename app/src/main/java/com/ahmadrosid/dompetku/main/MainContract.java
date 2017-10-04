@@ -27,4 +27,10 @@ public interface MainContract {
         void onClickListener(Transaction transactions);
         void onLongClickListener(Transaction transactions);
     }
+
+    interface PopUpListener {
+        void success();
+        void failed(String message);
+    }
+
 }

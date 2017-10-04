@@ -1,7 +1,5 @@
 package com.ahmadrosid.dompetku.transaction;
 
-import com.ahmadrosid.dompetku.data.Transactions;
-
 /**
  * Created by staf on 03-Oct-17.
  */
@@ -9,7 +7,7 @@ import com.ahmadrosid.dompetku.data.Transactions;
 public interface TransactionContract {
 
     interface AddTransactionListener {
-        void success(Transactions transactions);
+        void success(String title, int amount, int type);
         void failed(String message);
     }
 }

@@ -32,4 +32,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }

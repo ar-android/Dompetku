@@ -15,7 +15,7 @@ public interface MainContract {
     interface View {
         void showBalance(int ballance);
         void showError(String message);
-        void showListTransaksi(List<Transactions> transactionses);
+        void showListTransaksi(List<Transaction> transactionses);
     }
 
     interface Presenter {
@@ -26,7 +26,7 @@ public interface MainContract {
     }
 
     interface ListViewListener {
-        void onClickListener(Transactions transactions);
-        void onLongClickListener(Transactions transactions);
+        void onClickListener(Transaction transactions);
+        void onLongClickListener(Transaction transactions);
     }
 }

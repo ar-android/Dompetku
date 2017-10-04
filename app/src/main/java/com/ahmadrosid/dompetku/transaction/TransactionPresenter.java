@@ -58,8 +58,18 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     }
 
     @Override
-    public void deleteTransaction(long id, TransactionContract.DeleteTransactionListener listener) {
-        transactionRepository.deleteTransaksi(id, listener);
+    public void deleteTransaction(long id) {
+        transactionRepository.deleteTransaksi(id, new TransactionContract.DeleteTransactionListener() {
+            @Override
+            public void success() {
+                editView.showError("Transaction Deleted");
+            }
+
+            @Override
+            public void failed(String message) {
+                editView.showError(message);
+            }
+        });
     }
 
 }

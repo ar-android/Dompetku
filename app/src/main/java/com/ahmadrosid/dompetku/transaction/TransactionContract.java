@@ -31,7 +31,7 @@ public interface TransactionContract {
         void loadTransaction(long id);
         void createTransaction(String title, int amount, Transaction.TransactionType type);
         void updateTransaction(long id, String title, int amount, Transaction.TransactionType type);
-        void deleteTransaction(long id, DeleteTransactionListener listener);
+        void deleteTransaction(long id);
     }
 
 }

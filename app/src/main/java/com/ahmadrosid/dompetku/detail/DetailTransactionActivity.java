@@ -107,25 +107,14 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     }
 
     private void delete() {
-        final TransactionContract.DeleteTransactionListener deleteTransactionListener = new TransactionContract.DeleteTransactionListener() {
-            @Override
-            public void success() {
-                finish();
-            }
-
-            @Override
-            public void failed(String message) {
-                showError(message);
-            }
-        };
-
         new AlertDialog.Builder(this)
                 .setTitle("Message")
                 .setMessage("Are you sure to delete?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        presenter.deleteTransaction(id, deleteTransactionListener);
+                        presenter.deleteTransaction(id);
+                        finish();
                     }
                 })
                 .setNegativeButton("Cancel", null)

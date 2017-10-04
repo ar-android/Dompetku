@@ -7,7 +7,10 @@ import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Ballance;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
+import com.ahmadrosid.dompetku.models.Transaction;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,11 +61,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void addTransaksi(Transactions transactions) {
-        realm.beginTransaction();
-
-        realm.copyToRealm(transactions);
-        realm.commitTransaction();
+    public void addTransaksi(String title, int amount, Transaction.TransactionType type) {
+        long date = System.currentTimeMillis();
+        Transaction transaction = new Transaction(title, amount, date, type);
+        transaction.save();
 
         loadData();
     }

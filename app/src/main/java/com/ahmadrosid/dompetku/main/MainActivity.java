@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 import com.ahmadrosid.dompetku.StateBottomeSet;
+import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.transaction.NewTransaction;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         NewTransaction modalBottomSheet = new NewTransaction(new TransactionContract.AddTransactionListener() {
             @Override
             public void success(Transactions transactions) {
-                presenter.addTransaksi(transactions);
+                presenter.addTransaksi(transactions.getTitle(), transactions.getAmount(), Transaction.TransactionType.PEMASUKAN);
             }
 
             @Override

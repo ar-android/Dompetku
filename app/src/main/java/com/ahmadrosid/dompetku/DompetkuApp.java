@@ -1,8 +1,8 @@
 package com.ahmadrosid.dompetku;
 
 import android.app.Application;
-import android.content.Context;
 
+import com.activeandroid.ActiveAndroid;
 import com.ahmadrosid.dompetku.di.AppComponent;
 import com.ahmadrosid.dompetku.di.AppModule;
 import com.ahmadrosid.dompetku.di.DaggerAppComponent;
@@ -28,6 +28,8 @@ public class DompetkuApp extends Application {
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
+        ActiveAndroid.initialize(this);
     }
 
     public static DompetkuApp getIntance() {

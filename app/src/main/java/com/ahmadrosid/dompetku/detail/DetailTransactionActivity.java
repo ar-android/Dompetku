@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahmadrosid.dompetku.transaction.EditTransactionActivity;
 import com.ahmadrosid.dompetku.R;
@@ -17,6 +18,8 @@ import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.main.MainActivity;
 import com.ahmadrosid.dompetku.models.Transaction;
+import com.ahmadrosid.dompetku.transaction.TransactionContract;
+import com.ahmadrosid.dompetku.transaction.TransactionPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-public class DetailTransactionActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailTransactionActivity extends AppCompatActivity implements View.OnClickListener, TransactionContract.EditView {
+
+    public static String EXTRAKEY = "TRANSACTIONKEY";
 
     @BindView(R.id.ballance)
     TextView ballance;
@@ -46,12 +51,12 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
 
     private Calendar calendar = Calendar.getInstance();
 
-    long id;
-    private Transaction transaction;
+    private TransactionContract.Presenter presenter;
+    private long id;
 
-    public static void start(Context context, Transaction transaction) {
+    public static void start(Context context, long id) {
         Intent starter = new Intent(context, DetailTransactionActivity.class);
-        starter.putExtra("Transaction", transaction);
+        starter.putExtra(EXTRAKEY, id);
         context.startActivity(starter);
     }
 
@@ -65,42 +70,10 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        loadData();
-    }
+        id = getIntent().getLongExtra(EXTRAKEY, 0);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (id > 0)
-            loadData();
-    }
-
-    private void loadData() {
-        transaction = (Transaction) getIntent().getExtras().getSerializable("Transaction");
-
-        setupData(transaction);
-    }
-
-    private void setupData(Transaction model) {
-        getSupportActionBar().setTitle(model.title);
-
-        Date dates = new Date(model.date);
-        calendar.setTime(dates);
-
-        String data_amount = CurrencyHelper.format(model.amount);
-        title.setText(model.title);
-        time.setText(format("EEE, MMM d, yy"));
-        ballance.setText(data_amount);
-        amount.setText(data_amount);
-
-        if (model.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
-            type.setText("Pemasukan");
-        } else {
-            type.setText("Pengeluaran");
-        }
-
-        findViewById(R.id.btn_edit).setOnClickListener(this);
-        findViewById(R.id.btn_delete).setOnClickListener(this);
+        presenter = new TransactionPresenter(this);
+        presenter.loadTransaction(id);
     }
 
     public String format(String sdfPattern) {
@@ -122,7 +95,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_edit:
-                EditTransactionActivity.start(this, transaction);
+                EditTransactionActivity.start(this, id);
                 finish();
                 break;
             case R.id.btn_delete:
@@ -158,4 +131,31 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
                 .show();
     }
 
+    @Override
+    public void showData(Transaction transaction) {
+        getSupportActionBar().setTitle(transaction.title);
+
+        Date dates = new Date(transaction.date);
+        calendar.setTime(dates);
+
+        String data_amount = CurrencyHelper.format(transaction.amount);
+        title.setText(transaction.title);
+        time.setText(format("EEE, MMM d, yy"));
+        ballance.setText(data_amount);
+        amount.setText(data_amount);
+
+        if (transaction.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
+            type.setText("Pemasukan");
+        } else {
+            type.setText("Pengeluaran");
+        }
+
+        findViewById(R.id.btn_edit).setOnClickListener(this);
+        findViewById(R.id.btn_delete).setOnClickListener(this);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

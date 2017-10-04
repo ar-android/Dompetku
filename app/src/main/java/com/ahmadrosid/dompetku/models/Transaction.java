@@ -31,7 +31,6 @@ public class Transaction extends Model implements Serializable {
     }
 
     public Transaction() {
-        super();
     }
 
     public Transaction(String title, int amount, long date, TransactionType type) {

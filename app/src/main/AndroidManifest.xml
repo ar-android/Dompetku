@@ -26,7 +26,7 @@
         </activity>
 
         <meta-data android:name="AA_DB_NAME" android:value="DompetkuDB" />
-        <meta-data android:name="AA_DB_VERSION" android:value="7" />
+        <meta-data android:name="AA_DB_VERSION" android:value="8" />
 
         <meta-data
             android:name="AA_MODELS"

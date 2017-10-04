@@ -1,9 +1,11 @@
 package com.ahmadrosid.dompetku.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,7 +17,9 @@ import com.ahmadrosid.dompetku.StateBottomeSet;
 import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.models.Transaction;
+import com.ahmadrosid.dompetku.transaction.EditTransactionActivity;
 import com.ahmadrosid.dompetku.transaction.NewTransaction;
+import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
 
@@ -93,8 +97,30 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
 
             @Override
-            public void onLongClickListener(Transaction transactions) {
+            public void onLongClickListener(final Transaction transactions) {
+                CharSequence[] menuItems = new CharSequence[] {"Detail", "Edit", "Delete"};
 
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle(transactions.title);
+                builder.setItems(menuItems, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0 :
+                                DetailTransactionActivity.start(MainActivity.this, transactions.getId());
+                                break;
+                            case 1 :
+                                EditTransactionActivity.start(MainActivity.this, transactions.getId());
+                                break;
+                            case 2 :
+                                delete(transactions);
+                                break;
+                        }
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -104,6 +130,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void onDismiss() {
 
+    }
+
+    private void delete(final Transaction transaction) {
+        new AlertDialog.Builder(this)
+                .setTitle("Message")
+                .setMessage("Are you sure to delete?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        presenter.deleteTransaksi(transaction);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
 }

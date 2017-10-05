@@ -7,4 +7,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <GridLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="1px"
+        android:numColumns="4"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="1px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"/>
+    </GridLayout>
+
 </android.support.constraint.ConstraintLayout>

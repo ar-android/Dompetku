@@ -40,7 +40,7 @@ public class MainPresenter implements MainContract.Presenter {
         start.set(current.get(Calendar.YEAR), current.get(Calendar.MONTH), 0, 23, 59, 59);
 
         Calendar end = Calendar.getInstance();
-        end.set(current.get(Calendar.YEAR), current.get(Calendar.MONTH), 10, 23, 59, 59);
+        end.set(current.get(Calendar.YEAR), current.get(Calendar.MONTH)+1, 0, 23, 59, 59);
 
         DateFormat format = new SimpleDateFormat("dd MMMM yyyy - hh:mm:ss");
 

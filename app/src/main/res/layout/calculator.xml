@@ -212,13 +212,12 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:text="TextView"
-        android:textAppearance="@android:style/TextAppearance.Leanback.FormWizard.Large"
+        android:textAppearance="@android:style/TextAppearance.Large"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_substract"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintBottom_toTopOf="@+id/button_substract" />
 
 </android.support.constraint.ConstraintLayout>

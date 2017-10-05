@@ -66,7 +66,7 @@
                 android:inputType="number"
                 android:textSize="14sp"/>
 
-            <com.ahmadrosid.dompetku.calculator.Calculator
+            <com.ahmadrosid.dompetku.utils.Calculator
                 android:id="@+id/calculator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -85,7 +85,7 @@
                 android:inputType="text"
                 android:textSize="14sp"/>
 
-            <com.ahmadrosid.dompetku.calculator.TitlePicker
+            <com.ahmadrosid.dompetku.utils.TitlePicker
                 android:id="@+id/title_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -1,9 +1,7 @@
-package com.ahmadrosid.dompetku.calculator;
+package com.ahmadrosid.dompetku.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.Space;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

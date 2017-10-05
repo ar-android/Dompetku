@@ -98,11 +98,13 @@ public class MainAdapter extends ArrayAdapter<Transaction> {
 
             if (transaction.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
                 this.amount.setText(" + " + data);
+                amount.setTextColor(view.getResources().getColor(R.color.colorPrimary));
                 iconWalletList.setImageResource(R.drawable.wallet_in);
                 type.setText("PEMASUKAN");
                 type.setBackgroundResource(R.color.colorPrimary);
             } else {
                 this.amount.setText(" - " + data);
+                amount.setTextColor(view.getResources().getColor(R.color.colorAccent));
                 iconWalletList.setImageResource(R.drawable.wallet_out);
                 type.setText("PENGELUARAN");
                 type.setBackgroundResource(R.color.colorAccent);

@@ -1,5 +1,8 @@
 package com.ahmadrosid.dompetku.models;
 
+import android.util.Log;
+
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
@@ -23,6 +26,16 @@ public class TransactionRepository {
 
     public List<Transaction> getTransaksiGroupBy() {
         return new Select().from(Transaction.class).groupBy("Title").orderBy("id desc").execute();
+    }
+
+    public List<Transaction> getTransaksiList(long start, long end) {
+        From query = new Select().from(Transaction.class)
+                .where("Date >= " + start + " AND Date <= " + end)
+                .orderBy("id desc");
+
+        Log.e("QUERY", query.toSql());
+
+        return query.execute();
     }
 
     public List<Transaction> getTransaksiList() {

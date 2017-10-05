@@ -1,11 +1,17 @@
 package com.ahmadrosid.dompetku.main;
 
+import android.util.Log;
+
 import com.ahmadrosid.dompetku.DompetkuApp;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.models.TransactionListener;
 import com.ahmadrosid.dompetku.models.TransactionRepository;
 import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,12 +34,30 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadData() {
-        List<Transaction> data = transactionRepository.getTransaksiList();
+        Calendar current = Calendar.getInstance();
+
+        Calendar start = Calendar.getInstance();
+        start.set(current.get(Calendar.YEAR), current.get(Calendar.MONTH), 0, 23, 59, 59);
+
+        Calendar end = Calendar.getInstance();
+        end.set(current.get(Calendar.YEAR), current.get(Calendar.MONTH), 10, 23, 59, 59);
+
+        DateFormat format = new SimpleDateFormat("dd MMMM yyyy - hh:mm:ss");
+
+        Log.e("Current",    format.format(current.getTime())    + " " + current.getTimeInMillis());
+        Log.e("Start",      format.format(start.getTime())      + " " + start.getTimeInMillis());
+        Log.e("End",        format.format(end.getTime())        + " " + end.getTimeInMillis());
+
+        long s = start.getTimeInMillis();
+        long e = end.getTimeInMillis();
+
+        List<Transaction> data = transactionRepository.getTransaksiList(s, e);
 
         view.showListTransaksi(data);
 
         int ballance = 0;
         for (Transaction transaction : data) {
+            Log.e("Transaksi", transaction.date+"");
             if (transaction.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
                 ballance += transaction.amount;
             } else {

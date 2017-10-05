@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_transaction);
-//        ButterKnife.bind(this);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         presenter = new MainPresenter(this);
     }
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onResume() {
         super.onResume();
-//        presenter.loadData();
+        presenter.loadData();
     }
 
     @Override

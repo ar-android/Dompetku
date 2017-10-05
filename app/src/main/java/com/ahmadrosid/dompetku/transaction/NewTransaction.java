@@ -13,8 +13,12 @@ import android.widget.RelativeLayout;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.calculator.Calculator;
 import com.ahmadrosid.dompetku.calculator.CalculatorListener;
+import com.ahmadrosid.dompetku.calculator.TitlePicker;
+import com.ahmadrosid.dompetku.calculator.TitlePickerListener;
 import com.ahmadrosid.dompetku.main.MainContract;
 import com.ahmadrosid.dompetku.models.Transaction;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +50,8 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
     RelativeLayout titleBar;
     @BindView(R.id.calculator)
     Calculator calculator;
+    @BindView(R.id.title_picker)
+    TitlePicker titlePicker;
 
     private Transaction.TransactionType type;
 
@@ -78,10 +84,33 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         calculator.setListener(new CalculatorListener() {
             @Override
             public void result(int amount) {
-                itemAmount.setText(amount+"");
+                itemAmount.setText(amount + "");
                 calculator.setVisibility(View.GONE);
+                itemName.requestFocus();
+                titlePicker.setVisibility(View.VISIBLE);
             }
         });
+
+        titlePicker.setListener(new TitlePickerListener() {
+            @Override
+            public void onClickListener(String title) {
+                itemName.setText(title);
+            }
+        });
+
+        presenter.loadAllTitle(new TransactionContract.AllTitleListener() {
+            @Override
+            public void success(List<String> data) {
+                titlePicker.setTextList(data);
+            }
+
+            @Override
+            public void failed(String message) {
+
+            }
+        });
+
+        titlePicker.setVisibility(View.INVISIBLE);
     }
 
     @OnClick({R.id.img_close, R.id.img_done})

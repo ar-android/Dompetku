@@ -4,6 +4,9 @@ import com.ahmadrosid.dompetku.DompetkuApp;
 import com.ahmadrosid.dompetku.models.Transaction;
 import com.ahmadrosid.dompetku.models.TransactionRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -20,6 +23,26 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     public TransactionPresenter(TransactionContract.EditView editView) {
         DompetkuApp.getIntance().getAppComponent().inject(this);
         this.editView = editView;
+    }
+
+    @Override
+    public void loadAllTitle(TransactionContract.AllTitleListener titleListener) {
+        List<Transaction> transactions = transactionRepository.getTransaksiGroupBy();
+
+        List<String> titles = new ArrayList<String>();
+
+        if (transactions.size() > 5) {
+            for (int i=0;i<5;i++)
+                titles.add(transactions.get(i).title);
+        } else {
+            for (Transaction transaction : transactions)
+                titles.add(transaction.title);
+        }
+
+        if (!titles.isEmpty())
+            titleListener.success(titles);
+        else
+            titleListener.failed("Empty data");
     }
 
     @Override

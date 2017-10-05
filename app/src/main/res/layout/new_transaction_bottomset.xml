@@ -84,6 +84,12 @@
                 android:hint="Title"
                 android:inputType="text"
                 android:textSize="14sp"/>
+
+            <com.ahmadrosid.dompetku.calculator.TitlePicker
+                android:id="@+id/title_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>

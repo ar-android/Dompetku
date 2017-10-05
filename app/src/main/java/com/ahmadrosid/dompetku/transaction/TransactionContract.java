@@ -2,11 +2,18 @@ package com.ahmadrosid.dompetku.transaction;
 
 import com.ahmadrosid.dompetku.models.Transaction;
 
+import java.util.List;
+
 /**
  * Created by staf on 03-Oct-17.
  */
 
 public interface TransactionContract {
+
+    interface AllTitleListener {
+        void success(List<String> data);
+        void failed(String message);
+    }
 
     interface AddTransactionListener {
         void success(Transaction transaction);
@@ -28,6 +35,7 @@ public interface TransactionContract {
     }
 
     interface Presenter {
+        void loadAllTitle(AllTitleListener titleListener);
         void loadTransaction(long id);
         void createTransaction(String title, int amount, Transaction.TransactionType type);
         void updateTransaction(long id, String title, int amount, Transaction.TransactionType type);

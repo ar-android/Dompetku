@@ -21,6 +21,10 @@ public class TransactionRepository {
         }
     }
 
+    public List<Transaction> getTransaksiGroupBy() {
+        return new Select().from(Transaction.class).groupBy("Title").orderBy("id desc").execute();
+    }
+
     public List<Transaction> getTransaksiList() {
         return new Select().from(Transaction.class).orderBy("id desc").execute();
     }

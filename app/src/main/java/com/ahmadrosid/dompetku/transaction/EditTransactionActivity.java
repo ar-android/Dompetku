@@ -3,6 +3,7 @@ package com.ahmadrosid.dompetku.transaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
@@ -10,14 +11,19 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.ahmadrosid.dompetku.R;
+import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.detail.DetailTransactionActivity;
 import com.ahmadrosid.dompetku.models.Transaction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+
+import static android.R.attr.id;
 
 public class EditTransactionActivity extends AppCompatActivity implements TransactionContract.EditView {
 
@@ -30,11 +36,9 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
     @BindView(R.id.transaction)
     AppCompatSpinner transaction_type;
 
-    private long id;
+    private Transaction transaction;
 
-    private TransactionContract.Presenter presenter;
-
-    public static void start(Context context, long transaction) {
+    public static void start(Context context, Transaction transaction) {
         Intent starter = new Intent(context, EditTransactionActivity.class);
         starter.putExtra(TRANSACTIONKEY, transaction);
         context.startActivity(starter);
@@ -50,10 +54,21 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_close));
 
-        id = getIntent().getLongExtra(TRANSACTIONKEY, 0);
+        transaction = (Transaction) getIntent().getExtras().getSerializable(TRANSACTIONKEY);
 
-        presenter = new TransactionPresenter(this);
-        presenter.loadTransaction(id);
+        setupData(transaction);
+
+    }
+
+    private void setupData(Transaction model) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.transaction_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        transaction_type.setAdapter(adapter);
+
+        title.setText(model.title);
+        amount.setText("" + model.amount);
+        transaction_type.setSelection(model.type.ordinal());
     }
 
     @Override
@@ -79,57 +94,48 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
     }
 
     private void done() {
+//        if (validate()) {
+//            Realm realmDb = Realm.getDefaultInstance();
+//            type = transaction.getSelectedItemPosition();
+//            realmDb.beginTransaction();
+//            Transactions data = realmDb.where(Transactions.class)
+//                    .equalTo("id", id).findFirst();
+//            data.setTitle(title.getText().toString());
+//            data.setAmount(Integer.parseInt(amount.getText().toString()));
+//            data.setDate(System.currentTimeMillis());
+//            data.setTransaction_type(type);
+//            realmDb.commitTransaction();
+//            realmDb.close();
+//
+//            startActivity(new
+//                    Intent(EditTransactionActivity.this, DetailTransactionActivity.class)
+//                    .putExtra("id", id));
+//            finish();
+//        }
+    }
+
+    private boolean validate() {
         if (title.getText().toString().isEmpty()) {
-            showError("Please input title.");
+            showMessage("Please input title.");
         } else if (amount.getText().toString().isEmpty()) {
-            showError("Please input amoun.");
+            showMessage("Please input amoun.");
         } else {
-            Transaction.TransactionType transactionType;
-            if (transaction_type.getSelectedItemPosition() == 0) {
-                transactionType = Transaction.TransactionType.PEMASUKAN;
-            } else {
-                transactionType = Transaction.TransactionType.PENGELUARAN;
-            }
-
-            TransactionContract.EditTransactionListener listener = new TransactionContract.EditTransactionListener() {
-
-                @Override
-                public void success(Transaction transaction) {
-                    Toast.makeText(EditTransactionActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                    showData(transaction);
-                }
-
-                @Override
-                public void failed(String message) {
-                    Toast.makeText(EditTransactionActivity.this, message, Toast.LENGTH_SHORT).show();
-                }
-            };
-
-            presenter.updateTransaction(
-                    id,
-                    title.getText().toString(),
-                    Integer.parseInt(amount.getText().toString()),
-                    transactionType,
-                    listener
-            );
+            return true;
         }
+        return false;
+    }
 
+    private void showMessage(String message) {
+        Snackbar.make(title, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showData(Transaction transaction) {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.transaction_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        transaction_type.setAdapter(adapter);
 
-        title.setText(transaction.title);
-        amount.setText("" + transaction.amount);
-        transaction_type.setSelection(transaction.type.ordinal());
     }
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 }

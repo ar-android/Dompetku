@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku.utils;
+package com.ahmadrosid.dompetku.calculator;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku.utils;
+package com.ahmadrosid.dompetku.calculator;
 
 /**
  * Created by macbookair on 10/5/17.

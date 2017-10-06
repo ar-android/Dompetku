@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku.utils;
+package com.ahmadrosid.dompetku.calculator;
 
 /**
  * Created by staf on 05-Oct-17.

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".transaction.EditTransactionActivity"
+            android:name=".EditTransactionActivity"
             android:label="@string/activity_edit_transaction">
         </activity>
         <activity android:name=".detail.DetailTransactionActivity">

@@ -13,8 +13,6 @@ import android.widget.ImageView;
 
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.StateBottomeSet;
-import com.ahmadrosid.dompetku.main.MainContract;
-import com.ahmadrosid.dompetku.models.Transaction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +30,7 @@ import butterknife.Unbinder;
  * @update by tyangjawi03
  */
 
-public class NewTransaction extends BottomSheetDialogFragment implements View.OnClickListener, TransactionContract.EditView {
+public class NewTransaction extends BottomSheetDialogFragment implements View.OnClickListener {
 
     @BindView(R.id.img_close)
     ImageView imgClose;
@@ -48,13 +46,10 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
 
     private int type = 0;
 
-    private MainContract.PopUpListener popUpListener;
+    private TransactionContract.AddTransactionListener addTransactionListener;
 
-    private TransactionContract.Presenter presenter;
-
-    public NewTransaction(MainContract.PopUpListener listener) {
-        popUpListener = listener;
-        presenter = new TransactionPresenter(this);
+    public NewTransaction(TransactionContract.AddTransactionListener listener) {
+        addTransactionListener = listener;
     }
 
     @Nullable
@@ -89,26 +84,20 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
 
     private void process() {
         if (itemName.getText().toString().isEmpty()) {
-            popUpListener.failed("Please input title.");
+            addTransactionListener.failed("Please input title.");
         } else if (itemAmount.getText().toString().isEmpty()) {
-            popUpListener.failed("Please input amount.");
+            addTransactionListener.failed("Please input amount.");
         } else {
             type = transaction.getSelectedItemPosition();
 
-            Transaction.TransactionType transactionType;
-
-            if (type == 0) {
-                transactionType = Transaction.TransactionType.PEMASUKAN;
-            } else  {
-                transactionType = Transaction.TransactionType.PENGELUARAN;
-            }
-
-            presenter.createTransaction(
+            addTransactionListener.success(
                     itemName.getText().toString(),
                     Integer.parseInt(itemAmount.getText().toString()),
-                    transactionType
+                    type
             );
 
+            ((StateBottomeSet) getActivity()).onDismiss();
+            dismiss();
         }
     }
 
@@ -116,20 +105,6 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void showData(Transaction transaction) {
-
-        popUpListener.success();
-
-        ((StateBottomeSet) getActivity()).onDismiss();
-        dismiss();
-    }
-
-    @Override
-    public void showError(String message) {
-        popUpListener.failed(message);
     }
 
 }

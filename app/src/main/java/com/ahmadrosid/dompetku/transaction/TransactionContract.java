@@ -9,7 +9,7 @@ import com.ahmadrosid.dompetku.models.Transaction;
 public interface TransactionContract {
 
     interface AddTransactionListener {
-        void success(Transaction transaction);
+        void success(String title, int amount, int type);
         void failed(String message);
     }
 
@@ -22,16 +22,11 @@ public interface TransactionContract {
         void showError(String message);
     }
 
-    interface DeleteTransactionListener {
-        void success();
-        void failed(String message);
-    }
-
     interface Presenter {
         void loadTransaction(long id);
-        void createTransaction(String title, int amount, Transaction.TransactionType type);
-        void updateTransaction(long id, String title, int amount, Transaction.TransactionType type);
-        void deleteTransaction(long id, DeleteTransactionListener listener);
+        void createTransaction(String title, int amount, Transaction.TransactionType type, AddTransactionListener listener);
+        void updateTransaction(long id, String title, int amount, Transaction.TransactionType type, EditTransactionListener listener);
+        void deleteTransaction(long id);
     }
 
 }

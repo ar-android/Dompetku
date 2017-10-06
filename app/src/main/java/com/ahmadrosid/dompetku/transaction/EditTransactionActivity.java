@@ -69,6 +69,9 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
                 done();
                 break;
             case android.R.id.home:
+                startActivity(new
+                        Intent(EditTransactionActivity.this, DetailTransactionActivity.class)
+                        .putExtra("id", id));
                 finish();
                 break;
         }
@@ -93,12 +96,12 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
                 @Override
                 public void success(Transaction transaction) {
                     Toast.makeText(EditTransactionActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                    finish();
+                    showData(transaction);
                 }
 
                 @Override
                 public void failed(String message) {
-                    showError(message);
+                    Toast.makeText(EditTransactionActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             };
 
@@ -106,7 +109,8 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
                     id,
                     title.getText().toString(),
                     Integer.parseInt(amount.getText().toString()),
-                    transactionType
+                    transactionType,
+                    listener
             );
         }
 
@@ -127,7 +131,5 @@ public class EditTransactionActivity extends AppCompatActivity implements Transa
     @Override
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish();
     }
-
 }

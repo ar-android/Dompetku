@@ -71,16 +71,11 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
         id = getIntent().getLongExtra(EXTRAKEY, 0);
 
         presenter = new TransactionPresenter(this);
+        presenter.loadTransaction(id);
     }
 
     public String format(String sdfPattern) {
         return new SimpleDateFormat(sdfPattern).format(calendar.getTime());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.loadTransaction(id);
     }
 
     @Override
@@ -99,6 +94,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
         switch (view.getId()) {
             case R.id.btn_edit:
                 EditTransactionActivity.start(this, id);
+                finish();
                 break;
             case R.id.btn_delete:
                 delete();
@@ -107,25 +103,15 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     }
 
     private void delete() {
-        final TransactionContract.DeleteTransactionListener deleteTransactionListener = new TransactionContract.DeleteTransactionListener() {
-            @Override
-            public void success() {
-                finish();
-            }
-
-            @Override
-            public void failed(String message) {
-                showError(message);
-            }
-        };
-
         new AlertDialog.Builder(this)
                 .setTitle("Message")
                 .setMessage("Are you sure to delete?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        presenter.deleteTransaction(id, deleteTransactionListener);
+                        presenter.deleteTransaction(id);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                     }
                 })
                 .setNegativeButton("Cancel", null)

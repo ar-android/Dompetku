@@ -5,7 +5,6 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
@@ -25,14 +24,13 @@
                 android:src="@drawable/ic_close"/>
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="New Transaction"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <ImageView
@@ -55,6 +53,19 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text"
+                android:textSize="14sp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
@@ -65,33 +76,27 @@
                 android:hint="Amount"
                 android:inputType="number"
                 android:textSize="14sp"/>
-
-            <com.ahmadrosid.dompetku.utils.Calculator
-                android:id="@+id/calculator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="Transaction"
+            android:textColor="@color/grey_500"/>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/item_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:inputType="text"
-                android:textSize="14sp"/>
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/transaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
 
-            <com.ahmadrosid.dompetku.utils.TitlePicker
-                android:id="@+id/title_picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_margin="5dp"
+            android:background="@color/grey_900"/>
 
     </LinearLayout>
-
 </LinearLayout>

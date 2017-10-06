@@ -5,15 +5,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath "io.realm:realm-gradle-plugin:2.3.0"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
 

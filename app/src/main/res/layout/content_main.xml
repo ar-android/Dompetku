@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey_300"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ahmadrosid.dompetku.main.MainActivity"
+    tools:context="com.ahmadrosid.dompetku.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
@@ -18,14 +18,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="230dp"
             android:background="@drawable/header_gradient">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left|top"
-                android:layout_margin="8dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -35,7 +35,8 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="Current Ballance"
                     android:textColor="@color/white"
-                    style="@style/Base.TextAppearance.AppCompat.Small"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/ballance"
@@ -45,47 +46,14 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="Rp 0"
                     android:textColor="@color/white"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right|bottom"
-                android:layout_marginTop="32dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/ballance"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Expend"
-                    android:textColor="@color/white"
-                    style="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/expend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Rp 0"
-                    android:textColor="@color/white"
-                    style="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textSize="30sp"
                     android:textStyle="bold"/>
             </LinearLayout>
-
         </RelativeLayout>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/list_wallet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
     </LinearLayout>
 </RelativeLayout>

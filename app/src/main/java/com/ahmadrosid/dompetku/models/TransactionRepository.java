@@ -21,8 +21,16 @@ public class TransactionRepository {
         }
     }
 
+    public void addPemasukan(String title, int amount, TransactionListener listener) {
+        addTransaksi(title, amount, Transaction.TransactionType.PEMASUKAN, listener);
+    }
+
+    public void addPengeluaran(String title, int amount, TransactionListener listener) {
+        addTransaksi(title, amount, Transaction.TransactionType.PENGELUARAN, listener);
+    }
+
     public List<Transaction> getTransaksiList() {
-        return new Select().from(Transaction.class).orderBy("id desc").execute();
+        return new Select().from(Transaction.class).execute();
     }
 
 }

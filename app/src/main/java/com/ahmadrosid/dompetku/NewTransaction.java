@@ -1,4 +1,4 @@
-package com.ahmadrosid.dompetku.transaction;
+package com.ahmadrosid.dompetku;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.ahmadrosid.dompetku.R;
-import com.ahmadrosid.dompetku.StateBottomeSet;
 import com.ahmadrosid.dompetku.data.Transactions;
 
 import io.realm.Realm;
@@ -35,14 +33,11 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
 
     private Realm realm;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.new_transaction_bottomset, container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         item_name = (EditText) view.findViewById(R.id.item_name);
@@ -58,8 +53,7 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
         transaction.setAdapter(adapter);
     }
 
-    @Override
-    public void onClick(View view) {
+    @Override public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_close:
                 dismiss();

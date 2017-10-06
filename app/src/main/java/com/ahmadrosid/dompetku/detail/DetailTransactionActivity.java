@@ -16,7 +16,6 @@ import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.main.MainActivity;
-import com.ahmadrosid.dompetku.models.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,7 +47,7 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
 
     long id;
 
-    public static void start(Context context, Transaction transaction) {
+    public static void start(Context context, long transaction) {
         Intent starter = new Intent(context, DetailTransactionActivity.class);
         starter.putExtra("Transaction", transaction);
         context.startActivity(starter);
@@ -75,24 +74,29 @@ public class DetailTransactionActivity extends AppCompatActivity implements View
     }
 
     private void loadData() {
-        Transaction transaction = (Transaction) getIntent().getExtras().getSerializable("Transaction");
+        Realm realm = Realm.getDefaultInstance();
+        id = getIntent().getExtras().getLong("Transaction");
 
-        setupData(transaction);
+        realm.beginTransaction();
+        Transactions data = realm.where(Transactions.class).equalTo("id", id).findFirst();
+        setupData(data);
+        realm.commitTransaction();
+        realm.close();
     }
 
-    private void setupData(Transaction model) {
-        getSupportActionBar().setTitle(model.title);
+    private void setupData(Transactions model) {
+        getSupportActionBar().setTitle(model.getTitle());
 
-        Date dates = new Date(model.date);
+        Date dates = new Date(model.getDate());
         calendar.setTime(dates);
 
-        String data_amount = CurrencyHelper.format(model.amount);
-        title.setText(model.title);
+        String data_amount = CurrencyHelper.format(model.getAmount());
+        title.setText(model.getTitle());
         time.setText(format("EEE, MMM d, yy"));
         ballance.setText(data_amount);
         amount.setText(data_amount);
 
-        if (model.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
+        if (model.getTransaction_type() == 0) {
             type.setText("Pemasukan");
         } else {
             type.setText("Pengeluaran");

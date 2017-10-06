@@ -56,18 +56,16 @@ public class MainPresenter implements MainContract.Presenter {
         view.showListTransaksi(data);
 
         int ballance = 0;
-        int expend = 0;
         for (Transaction transaction : data) {
             Log.e("Transaksi", transaction.date+"");
             if (transaction.type.ordinal() == Transaction.TransactionType.PEMASUKAN.ordinal()) {
                 ballance += transaction.amount;
             } else {
                 ballance -= transaction.amount;
-                expend += transaction.amount;
             }
         }
 
-        view.showBalance(ballance, expend);
+        view.showBalance(ballance);
     }
 
     @Override

@@ -8,8 +8,6 @@ import com.ahmadrosid.dompetku.data.Ballance;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
 import com.ahmadrosid.dompetku.models.Transaction;
-import com.ahmadrosid.dompetku.models.TransactionListener;
-import com.ahmadrosid.dompetku.models.TransactionRepository;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,9 +28,6 @@ public class MainPresenter implements MainContract.Presenter {
     @Inject
     Realm realm;
 
-    @Inject
-    TransactionRepository transactionRepository;
-
     public MainPresenter(MainContract.View view) {
         this.view = view;
         DompetkuApp.getIntance().getAppComponent().inject(this);
@@ -40,24 +35,38 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadData() {
-        List<Transaction> data = transactionRepository.getTransaksiList();
+        if (realm == null) {
+            view.showError("Data error");
+            return;
+        }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override public void execute(Realm realm) {
+                List<Transactions> data = realm.where(Transactions.class).findAll();
+                view.showListTransaksi(data);
 
-        view.showListTransaksi(data);
+                int ballance = 0;
+
+                for (Transactions transaction : data) {
+                    if (transaction.getTransaction_type() == 1) {
+                        ballance -= transaction.getAmount();
+                    } else {
+                        ballance += transaction.getAmount();
+                    }
+                }
+
+                view.showBalance(ballance);
+
+            }
+        });
     }
 
     @Override
     public void addTransaksi(String title, int amount, Transaction.TransactionType type) {
-        transactionRepository.addTransaksi(title, amount, type, new TransactionListener() {
-            @Override
-            public void success() {
-                loadData();
-            }
+        long date = System.currentTimeMillis();
+        Transaction transaction = new Transaction(title, amount, date, type);
+        transaction.save();
 
-            @Override
-            public void failed(String message) {
-                view.showError(message);
-            }
-        });
+        loadData();
     }
 
     @Override

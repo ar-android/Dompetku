@@ -1,7 +1,6 @@
 package com.ahmadrosid.dompetku.di;
 
 import com.ahmadrosid.dompetku.DompetkuApp;
-import com.ahmadrosid.dompetku.models.TransactionRepository;
 
 import javax.inject.Singleton;
 
@@ -28,9 +27,4 @@ public class AppModule {
         return Realm.getDefaultInstance();
     }
 
-    @Provides
-    @Singleton
-    TransactionRepository provideTransactionRepository() {
-        return new TransactionRepository();
-    }
 }

@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
-import com.ahmadrosid.dompetku.main.MainContract;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,8 +23,6 @@ import java.util.Date;
  */
 public class TransactionItemHolder extends RecyclerView.ViewHolder{
 
-    private final MainContract.ListViewListener listViewLlistener;
-    private final View rootView;
     private Calendar calendar;
 
     private ImageView icon;
@@ -34,7 +31,7 @@ public class TransactionItemHolder extends RecyclerView.ViewHolder{
     private TextView date;
     private TextView type;
 
-    public TransactionItemHolder(View itemView, final MainContract.ListViewListener listener) {
+    public TransactionItemHolder(View itemView) {
         super(itemView);
         calendar = Calendar.getInstance();
         icon = (ImageView) itemView.findViewById(R.id.icon_wallet_list);
@@ -42,12 +39,9 @@ public class TransactionItemHolder extends RecyclerView.ViewHolder{
         amount = (TextView) itemView.findViewById(R.id.amount);
         date = (TextView) itemView.findViewById(R.id.time);
         type = (TextView) itemView.findViewById(R.id.type);
-
-        rootView = itemView;
-        listViewLlistener = listener;
     }
 
-    public void bind(final Transactions model) {
+    public void bind(Transactions model) {
         Date dates = new Date(model.getDate());
         calendar.setTime(dates);
 
@@ -66,21 +60,6 @@ public class TransactionItemHolder extends RecyclerView.ViewHolder{
             type.setBackgroundResource(R.color.colorAccent);
             amount.setText("- " + data_amount);
         }
-
-        rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listViewLlistener.onClickListener(model);
-            }
-        });
-
-        rootView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listViewLlistener.onLongClickListener(model);
-                return true;
-            }
-        });
     }
 
     public String format (String sdfPattern) {

@@ -1,15 +1,13 @@
 package com.ahmadrosid.dompetku.transaction;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
@@ -20,6 +18,7 @@ import com.ahmadrosid.dompetku.models.Transaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by ocittwo on 1/26/17.
@@ -28,10 +27,11 @@ import butterknife.OnClick;
  * @Email ocittwo@gmail.com
  * @Github https://github.com/ar-android
  * @Web http://ahmadrosid.com
+ *
  * @update by tyangjawi03
  */
 
-public class NewTransaction extends Dialog implements View.OnClickListener, TransactionContract.EditView {
+public class NewTransaction extends BottomSheetDialogFragment implements View.OnClickListener, TransactionContract.EditView {
 
     @BindView(R.id.img_close)
     ImageView imgClose;
@@ -43,30 +43,33 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
     AppCompatEditText itemAmount;
     @BindView(R.id.transaction)
     AppCompatSpinner transaction;
+    Unbinder unbinder;
+
     private int type = 0;
 
     private MainContract.PopUpListener popUpListener;
 
     private TransactionContract.Presenter presenter;
 
-    public NewTransaction(Context context, MainContract.PopUpListener listener) {
-        super(context);
+    public NewTransaction(MainContract.PopUpListener listener) {
         popUpListener = listener;
         presenter = new TransactionPresenter(this);
     }
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.new_transaction_bottomset);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.new_transaction_bottomset, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getContext(),
-                R.array.transaction_type,
-                android.R.layout.simple_spinner_item
-        );
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.transaction_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         transaction.setAdapter(adapter);
     }
@@ -95,7 +98,7 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
 
             if (type == 0) {
                 transactionType = Transaction.TransactionType.PEMASUKAN;
-            } else {
+            } else  {
                 transactionType = Transaction.TransactionType.PENGELUARAN;
             }
 
@@ -106,6 +109,12 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
             );
 
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

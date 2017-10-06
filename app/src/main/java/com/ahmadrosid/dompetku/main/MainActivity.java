@@ -62,14 +62,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetViewgroup);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         NewTransaction modalBottomSheet = new NewTransaction(new TransactionContract.AddTransactionListener() {
-
             @Override
-            public void success(String title, int amount, int type) {
-                if (type == 0) {
-                    presenter.addTransaksi(title, amount, Transaction.TransactionType.PEMASUKAN);
-                } else {
-                    presenter.addTransaksi(title, amount, Transaction.TransactionType.PENGELUARAN);
-                }
+            public void success(Transactions transactions) {
+                presenter.addTransaksi(transactions.getTitle(), transactions.getAmount(), Transaction.TransactionType.PEMASUKAN);
             }
 
             @Override

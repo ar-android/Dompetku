@@ -91,11 +91,13 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
         } else {
             type = transaction.getSelectedItemPosition();
 
-            addTransactionListener.success(
-                    itemName.getText().toString(),
-                    Integer.parseInt(itemAmount.getText().toString()),
-                    type
-            );
+            Transactions data = new Transactions();
+            data.setTitle(itemName.getText().toString());
+            data.setAmount(Integer.parseInt(itemAmount.getText().toString()));
+            data.setDate(System.currentTimeMillis());
+            data.setTransaction_type(type);
+
+            addTransactionListener.success(data);
 
             ((StateBottomeSet) getActivity()).onDismiss();
             dismiss();

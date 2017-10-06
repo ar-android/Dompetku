@@ -65,12 +65,6 @@
                 android:hint="Amount"
                 android:inputType="number"
                 android:textSize="14sp"/>
-
-            <com.ahmadrosid.dompetku.calculator.Calculator
-                android:id="@+id/calculator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -87,5 +81,4 @@
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
-
 </LinearLayout>

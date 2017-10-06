@@ -137,8 +137,7 @@ public class Calculator extends ConstraintLayout {
                 break;
             case R.id.button_enter:
                 String result = textView.getText().toString();
-                int r = Integer.parseInt(result);
-                calculatorListener.result(r);
+                calculatorListener.result(Integer.getInteger(result));
                 break;
         }
     }

@@ -2,6 +2,7 @@ package com.ahmadrosid.dompetku.transaction;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ahmadrosid.dompetku.R;
-import com.ahmadrosid.dompetku.calculator.Calculator;
-import com.ahmadrosid.dompetku.calculator.CalculatorListener;
 import com.ahmadrosid.dompetku.main.MainContract;
 import com.ahmadrosid.dompetku.models.Transaction;
 
@@ -44,8 +43,6 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
     AppCompatTextView title;
     @BindView(R.id.title_bar)
     RelativeLayout titleBar;
-    @BindView(R.id.calculator)
-    Calculator calculator;
 
     private Transaction.TransactionType type;
 
@@ -74,14 +71,6 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         } else {
             titleBar.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
         }
-
-        calculator.setListener(new CalculatorListener() {
-            @Override
-            public void result(int amount) {
-                itemAmount.setText("Rp. " + amount);
-                calculator.setVisibility(View.GONE);
-            }
-        });
     }
 
     @OnClick({R.id.img_close, R.id.img_done})

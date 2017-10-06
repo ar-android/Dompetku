@@ -22,7 +22,7 @@
             android:name=".EditTransactionActivity"
             android:label="@string/activity_edit_transaction">
         </activity>
-        <activity android:name=".detail.DetailTransactionActivity">
+        <activity android:name=".DetailTransactionActivity">
         </activity>
     </application>
 

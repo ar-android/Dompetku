@@ -57,7 +57,7 @@ public class MainPresenter implements MainContract.Presenter {
         realm.copyToRealm(transactions);
         realm.commitTransaction();
 
-        loadData();
+        realm.close();
     }
 
     @Override

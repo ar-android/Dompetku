@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
-import com.ahmadrosid.dompetku.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

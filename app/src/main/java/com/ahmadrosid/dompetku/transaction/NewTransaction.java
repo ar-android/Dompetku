@@ -78,7 +78,7 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         calculator.setListener(new CalculatorListener() {
             @Override
             public void result(int amount) {
-                itemAmount.setText(amount+"");
+                itemAmount.setText("Rp. " + amount);
                 calculator.setVisibility(View.GONE);
             }
         });

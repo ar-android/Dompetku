@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.ahmadrosid.dompetku.R;
+import com.ahmadrosid.dompetku.StateBottomeSet;
 import com.ahmadrosid.dompetku.main.MainContract;
 import com.ahmadrosid.dompetku.models.Transaction;
 
@@ -122,6 +123,7 @@ public class NewTransaction extends BottomSheetDialogFragment implements View.On
 
         popUpListener.success();
 
+        ((StateBottomeSet) getActivity()).onDismiss();
         dismiss();
     }
 

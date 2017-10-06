@@ -24,9 +24,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:layout_margin="32dp"
+                android:gravity="left|top"
+                android:layout_margin="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -36,8 +35,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="Current Ballance"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    style="@style/Base.TextAppearance.AppCompat.Small"/>
 
                 <TextView
                     android:id="@+id/ballance"
@@ -47,9 +45,41 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="Rp 0"
                     android:textColor="@color/white"
-                    android:textSize="30sp"
+                    style="@style/Base.TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|bottom"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ballance"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Expend"
+                    android:textColor="@color/white"
+                    style="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/expend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Rp 0"
+                    android:textColor="@color/white"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
                     android:textStyle="bold"/>
             </LinearLayout>
+
         </RelativeLayout>
 
         <ListView

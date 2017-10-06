@@ -3,12 +3,10 @@ package com.ahmadrosid.dompetku.main;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @BindView(R.id.ballance)
     TextView ballanceTextView;
+    @BindView(R.id.expend)
+    TextView expendTextView;
     @BindView(R.id.list_wallet)
     ListView listWallet;
     @BindView(R.id.fab_pemasukan)
@@ -59,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showBalance(int ballance) {
-        ballanceTextView.setText(CurrencyHelper.format(ballance));
+    public void showBalance(int ballance, int expend) {
+        ballanceTextView.setText("+ " + CurrencyHelper.format(ballance));
+        expendTextView.setText("- " + CurrencyHelper.format(expend));
     }
 
     @Override

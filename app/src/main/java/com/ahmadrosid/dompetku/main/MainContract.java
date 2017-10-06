@@ -11,7 +11,7 @@ import java.util.List;
 public interface MainContract {
 
     interface View {
-        void showBalance(int ballance);
+        void showBalance(int ballance, int expend);
         void showError(String message);
         void showListTransaksi(List<Transaction> transactionses);
     }

@@ -91,12 +91,21 @@ public class NewTransaction extends Dialog implements View.OnClickListener, Tran
         } else if (itemAmount.getText().toString().isEmpty()) {
             popUpListener.failed("Please input amount.");
         } else {
-
-            presenter.createTransaction(
-                    itemName.getText().toString(),
-                    Integer.parseInt(itemAmount.getText().toString()),
-                    type
-            );
+//            type = transaction.getSelectedItemPosition();
+//
+//            Transaction.TransactionType transactionType;
+//
+//            if (type == 0) {
+//                transactionType = Transaction.TransactionType.PEMASUKAN;
+//            } else {
+//                transactionType = Transaction.TransactionType.PENGELUARAN;
+//            }
+//
+//            presenter.createTransaction(
+//                    itemName.getText().toString(),
+//                    Integer.parseInt(itemAmount.getText().toString()),
+//                    transactionType
+//            );
 
         }
     }

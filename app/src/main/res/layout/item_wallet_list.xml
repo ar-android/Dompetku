@@ -71,9 +71,14 @@
                 android:paddingTop="3dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="8sp"/>
+                android:textSize="11sp"/>
 
         </LinearLayout>
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey_100"/>
 </LinearLayout>

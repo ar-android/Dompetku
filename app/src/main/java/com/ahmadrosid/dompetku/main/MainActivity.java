@@ -1,12 +1,15 @@
 package com.ahmadrosid.dompetku.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import com.ahmadrosid.dompetku.transaction.NewTransaction;
 import com.ahmadrosid.dompetku.R;
 import com.ahmadrosid.dompetku.data.Transactions;
 import com.ahmadrosid.dompetku.helper.CurrencyHelper;
+import com.ahmadrosid.dompetku.list.AdapterTransactionList;
+import com.ahmadrosid.dompetku.list.TransactionItemHolder;
 import com.ahmadrosid.dompetku.transaction.TransactionContract;
 
 import java.util.List;
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.list_wallet)
-    ListView listWallet;
+    RecyclerView listWallet;
 
     private MainContract.Presenter presenter;
 
@@ -86,20 +91,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showListTransaksi(List<Transaction> transactions) {
-        MainAdapter adapter = new MainAdapter(this, transactions, new MainContract.ListViewListener() {
+    public void showListTransaksi(List<Transactions> transactionses) {
+        AdapterTransactionList adapter = new AdapterTransactionList(transactionses, new MainContract.ListViewListener() {
             @Override
-            public void onClickListener(Transaction transactions) {
+            public void onClickListener(Transactions transactions) {
                 DetailTransactionActivity.start(MainActivity.this, transactions.getId());
             }
 
             @Override
-            public void onLongClickListener(Transaction transactions) {
+            public void onLongClickListener(Transactions transactions) {
 
             }
         });
 
+        listWallet.setLayoutManager(new LinearLayoutManager(this));
         listWallet.setAdapter(adapter);
+        listWallet.setHasFixedSize(true);
     }
 
     @Override
